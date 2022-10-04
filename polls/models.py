@@ -69,3 +69,71 @@ class TarjetaDebito(models.Model):
 class TarjetaCredito(models.Model):
     numeroTarjeta = models.ForeignKey('Tarjeta')
     cupo = models.IntegerField()
+    
+    
+class Tienda(models.Model):
+    idTienda = models.IntegerField(primaryley=True)
+    idProductos = models.ForeignKey('Carrito de compras')
+    codigo = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=100)
+    sucursal = models.CharField(max_length=100)
+    ciudad = models.CharField(max_length=100)
+    idInventario = models.ForeignKey('Inventario')
+    idSucursal = models.ForeignKey('Sucursal')
+
+    
+class Inventario(models.Model):
+    idInventario = models.IntegerField(primaryley=True)
+    idLibro = models.ForeignKey('Libros')
+    
+    
+class CarritoCompras(models.Model):
+    idProductos = models.IntegerField(primaryley=True)
+    totalPago = models.IntegerField()
+    
+    
+class HistorialCompra(models.Model):
+    idRecibo = models.IntegerField(primaryley=True)
+    fecha = models.DateField()
+    
+    
+class HistorialDevoluciones(models.Model):
+    idRecibo = models.IntegerField(primaryley=True)
+    fecha = models.DateField()
+    
+    
+class Compras(models.Model):
+    idCompras = models.IntegerField(primaryley=True)
+    idProductos = models.ForeignKey('Carrito de compras')
+    idRecibo = models.ForeignKey('Historial compra')
+    numeroTarjeta = models.ForeignKey('Tarjeta')
+    nombrePropietario = models.CharField(max_length=100)
+    fechaCaducidad = models.DateField()
+    cvv = models.IntegerField()
+    
+    
+class Devolucion(models.Model):
+    idRecibo = models.IntegerField(primaryley=True)
+    fecha = models.DateField()
+    motivo = models.CharField(max_length=500)
+    
+    
+class Reservas(models.Model):
+    idReserva = models.IntegerField(primaryley=True)
+    codigoReserva = models.IntegerField()
+    fechaReserva = models.DateField()
+    
+    
+class ServicioMaps(models.Model):
+    idSucursal = models.IntegerField(primaryley=True)
+    idLocacion = models.ForeignKey('Locacion')
+    
+    
+class Locacion(models.Model):
+    idLocacion = models.IntegerField(primaryley=True)
+    pais = models.CharField(max_length=100)
+    ciudad = models.CharField(max_length=100)
+    departamento = models.CharField(max_length=100)
+    codigoZip = models.IntegerField()
+    direccion = models.CharField(max_length=100)
